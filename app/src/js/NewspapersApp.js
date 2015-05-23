@@ -1,27 +1,51 @@
 'use strict';
 
-var React = require('react');
-var mui = require('material-ui');
-var Checkbox = mui.Checkbox;
-var Paper = mui.Paper;
+var config = require('./config');
+
+var React        = require('react');
+var $            = require('jquery');
+var _            = require('lodash');
+var mui          = require('material-ui');
+var Paper        = mui.Paper;
+var Checkbox     = mui.Checkbox;
+var IconButton   = mui.IconButton;
+var ArticlesList = require('./ArticlesList');
 
 var NewspapersApp = React.createClass({
 
     getInitialState: function() {
         return {
-            newspapers_list: [{"id":1,"name":"Le Monde","url":"http://www.lemonde.fr"},
-            {"id":2,"name":"Le Figaro","url":"http://www.lefigaro.fr"},
-            {"id":3,"name":"20 Minutes","url":"http://www.20minutes.fr"}]
+            newspapers_list: []
         };
     },
+
+    componentDidMount: function() {
+        $.get(config.web.url + ':' + config.web.port +  '/newspapers', function(result) {
+            if (result && result["status"] && result["status"] == 'ok'){
+                var newspapers = result["data"];
+                newspapers = _.sortBy(newspapers, 'name');
+                if (this.isMounted()) {
+                    this.setState({newspapers_list: newspapers});
+                }
+            } else {
+                console.log("API error : no newspaper :(");
+            }
+        }.bind(this));
+    },
+
 
     render: function(){
         return (
             <div>
                 { /* Header : */ }
-                <header className="py2 blue bg-white">
-                    <div className="dark-gray thin-header">
-                        Newspapers App
+                <header className="header fixed z-index-header">
+                    <div className="centered-header">
+                        <div className="left">Newspapers App</div>
+                        <div className="right">
+                            (icon here -->)
+                            <IconButton iconClassName="muidocs-icon-action-home"
+                                        className="color-main border border-blue right" tooltip="Menu"/>
+                        </div>
                     </div>
                 </header>
                 { /* App content : */ }
@@ -37,7 +61,7 @@ var NewspapersApp = React.createClass({
                                             {this.state.newspapers_list.map(function(newspaper) {
                                                 return (
                                                     <div>
-                                                        <Checkbox label={newspaper.name} />
+                                                        <Checkbox label={newspaper.name} defaultSwitched={true} />
                                                     </div>
                                                 );
                                             })}
@@ -49,11 +73,23 @@ var NewspapersApp = React.createClass({
                                             <p>...</p>
                                         </div>
                                     </div>
-
                                 </Paper>
                             </div>
                             { /* App main column : */ }
-                            <div className="col col-9 py3 px3">Main content.</div>
+                            <div className="col col-9 py3 px3">
+                                <Paper zDepth={1} className="bg-white">
+                                    <div className="p2">
+                                        {this.state.newspapers_list.map(function(newspaper) {
+                                            return (
+                                                <div>
+                                                    <h2>{newspaper.name}</h2>
+                                                    <ArticlesList newspaper={newspaper}></ArticlesList>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </Paper>
+                            </div>
                         </div>
                     </div>
                 </div>

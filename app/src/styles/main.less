@@ -3,6 +3,7 @@
 // CSS overrides for material UI :
 //App Colors
 @primary-1-color: #4092FF;
+@primary-1-light-color: #8CC0FF;
 @primary-2-color: @cyan-700;
 @primary-3-color: @cyan-100;
 @accent-1-color: @pink-A200;
@@ -21,23 +22,49 @@
 }
 
 /* --------------------------------- Other --------------------------------- */
-@import "variables";
 
 html, body {
   overflow-x: hidden;
 }
 
-.thin-header {
-  max-width: 980px;
-  margin: auto;
+.color-main {
+  color: @primary-1-color;
 }
 
+@header-height: 64px;
+@header-bg-color: #FFFFFF; //FFFFFF
+@header-color: #111; //111111
+
+.header {
+  background-color: @header-bg-color;
+  color: @header-color;
+  width: 100%;
+  height: @header-height;
+  line-height: @header-height;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.container {
+  padding-top: @header-height;
+}
+
+.z-index-header {
+  z-index: 1000;
+}
+
+.centered-header {
+  max-width: 980px;
+  margin: auto;
+  line-height: @header-height;
+}
+
+@body-bg-color: #D8E9FF;
 body {
-  background-color: #4092FF;
+  background-color: @body-bg-color; //F0F0F0
 }
 
 .filter {
-  border-bottom: 1px solid #8CC0FF;
+  border-bottom: 1px solid @primary-1-light-color;
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
@@ -46,4 +73,61 @@ body {
   border-bottom: 1px solid transparent;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+a.link-article {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+a.link-article:hover {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid @primary-1-color;
+  background-color: @body-bg-color;
+  border-radius: 2px;
+}
+
+@article-size: 210px;
+@article-padding: 10px;
+article {
+  width: @article-size;
+  padding: @article-padding;
+
+  h2 {
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: 18px;
+  }
+}
+
+@article-thumbnail-size: 180px;
+
+.articles-list div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.article-thumbnail {
+  width: @article-thumbnail-size;
+  height: @article-thumbnail-size;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+}
+
+.article-thumbnail img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.article-thumbnail img.article-thumbnail-portrait {
+  width: 100%;
+  height: auto;
 }

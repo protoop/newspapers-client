@@ -1,0 +1,9 @@
+"use strict";
+
+var config = {};
+
+config.web = {};
+config.web.url = "http://my.newspapers-api.com";
+config.web.port = 80;
+
+module.exports = config;
