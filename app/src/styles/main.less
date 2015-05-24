@@ -115,19 +115,28 @@ article {
   overflow: hidden;
   position: relative;
   display: inline-block;
+  background-position: center center;
+  background-repeat: no-repeat;
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
 }
 
 .article-thumbnail img {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  height: 100%;
-  width: auto;
-  -webkit-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
 }
 .article-thumbnail img.article-thumbnail-portrait {
   width: 100%;
   height: auto;
+}
+
+a.articles-list-load-more {
+  width: @article-size;
+  height: @article-size;
+  margin: @article-padding;
+  display: inline-block;
+  border: 2px dashed @primary-1-color;
+  color: @primary-1-color;
+  line-height: @article-size;
+  text-align: center;
+  text-decoration: none;
 }

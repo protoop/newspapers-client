@@ -41,7 +41,7 @@ var ArticleList = React.createClass({
                         </div>
                     );
                 })}
-                <div>Load more...</div>
+                <div><a className="articles-list-load-more" href="">Load more...</a></div>
             </div>
         )
     }
