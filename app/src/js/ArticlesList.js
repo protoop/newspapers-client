@@ -32,12 +32,15 @@ var ArticleList = React.createClass({
 
 
     render: function(){
+
+        var display = this.props.display ? 'articles-list' : 'display-none';
+
         return (
-            <div className="articles-list">
+            <div className={display}>
                 {this.state.articles.map(function(article) {
                     return (
                         <div>
-                            <ArticlePanel article={article} />
+                            <ArticlePanel article={article} display={display} />
                         </div>
                     );
                 })}

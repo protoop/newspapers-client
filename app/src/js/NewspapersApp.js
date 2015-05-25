@@ -80,10 +80,12 @@ var NewspapersApp = React.createClass({
                                 <Paper zDepth={1} className="bg-white">
                                     <div className="p2">
                                         {this.state.newspapers_list.map(function(newspaper) {
+                                            var display_newspaper = true; //...
                                             return (
                                                 <div>
-                                                    <h2>{newspaper.name}</h2>
-                                                    <ArticlesList newspaper={newspaper}></ArticlesList>
+                                                    {display_newspaper ? <h2>{newspaper.name}</h2> : null}
+                                                    <ArticlesList newspaper={newspaper}
+                                                                  display={display_newspaper} />
                                                 </div>
                                             );
                                         })}

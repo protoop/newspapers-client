@@ -11,15 +11,20 @@ var Paper = mui.Paper;
 var ArticlePanel = React.createClass({
 
     render: function(){
+
+        var display = this.props.display ? 'link-article' : 'display-none';
+
         return (
-            <a href={this.props.article.url} target="_blank" className="link-article">
-                <article>
-                    <div className="article-thumbnail">
-                        <img src={this.props.article.image_url} />
-                    </div>
-                    <h2>{this.props.article.title}</h2>
-                </article>
-            </a>
+            <div>
+                <a href={this.props.article.url} target="_blank" className={display}>
+                    <article>
+                        <div className="article-thumbnail">
+                            <img src={this.props.article.image_url} />
+                        </div>
+                        <h2>{this.props.article.title}</h2>
+                    </article>
+                </a>
+            </div>
         )
     }
 });
