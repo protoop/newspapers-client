@@ -24,6 +24,9 @@ var NewspapersApp = React.createClass({
             if (result && result["status"] && result["status"] == 'ok'){
                 var newspapers = result["data"];
                 newspapers = _.sortBy(newspapers, 'name');
+                newspapers.map(function(newspaper) {
+                    newspaper.display = true;
+                });
                 if (this.isMounted()) {
                     this.setState({newspapers_list: newspapers});
                 }
@@ -33,8 +36,17 @@ var NewspapersApp = React.createClass({
         }.bind(this));
     },
 
+    onCheck: function () {
+        var newspapers_list = this.state.newspapers_list;
+        newspapers_list.map(function(newspaper) {
+            var refname = "filters_checkbox_newspaper_" + newspaper.id;
+            newspaper.display = this.refs[refname].isChecked();
+        }.bind(this));
+        this.setState(newspapers_list);
+    },
 
     render: function(){
+
         return (
             <div>
                 { /* Header : */ }
@@ -61,10 +73,13 @@ var NewspapersApp = React.createClass({
                                             {this.state.newspapers_list.map(function(newspaper) {
                                                 return (
                                                     <div>
-                                                        <Checkbox label={newspaper.name} defaultSwitched={true} />
+                                                        <Checkbox label={newspaper.name}
+                                                                  ref={"filters_checkbox_newspaper_" + newspaper.id}
+                                                                  onCheck={this.onCheck}
+                                                                  defaultSwitched={true} />
                                                     </div>
                                                 );
-                                            })}
+                                            }.bind(this))}
                                         </div>
                                         <div className="filter last-filter filter-tags">
                                             <p>Tags</p>
@@ -80,12 +95,11 @@ var NewspapersApp = React.createClass({
                                 <Paper zDepth={1} className="bg-white">
                                     <div className="p2">
                                         {this.state.newspapers_list.map(function(newspaper) {
-                                            var display_newspaper = true; //...
                                             return (
                                                 <div>
-                                                    {display_newspaper ? <h2>{newspaper.name}</h2> : null}
+                                                    {newspaper.display ? <h2>{newspaper.name}</h2> : null}
                                                     <ArticlesList newspaper={newspaper}
-                                                                  display={display_newspaper} />
+                                                                  display={newspaper.display} />
                                                 </div>
                                             );
                                         })}
