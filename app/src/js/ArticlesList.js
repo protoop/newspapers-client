@@ -37,14 +37,19 @@ var ArticleList = React.createClass({
 
         return (
             <div className={display}>
-                {this.state.articles.map(function(article) {
-                    return (
-                        <div>
-                            <ArticlePanel article={article} display={display} />
-                        </div>
-                    );
-                })}
-                <div><a className="articles-list-load-more" href="">Load more...</a></div>
+                <h2 className="newspaper-title">{this.props.newspaper.name}</h2>
+                <Paper zDepth={1} className="mb2 bg-white">
+                    <div className="p2">
+                        {this.state.articles.map(function(article) {
+                            return (
+                                <div>
+                                    <ArticlePanel article={article} display={display} />
+                                </div>
+                            );
+                        })}
+                        <div><a className="articles-list-load-more" href="">Load more...</a></div>
+                    </div>
+                </Paper>
             </div>
         )
     }

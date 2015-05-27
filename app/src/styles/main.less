@@ -32,8 +32,8 @@ html, body {
 }
 
 @header-height: 64px;
-@header-bg-color: #FFFFFF; //FFFFFF
-@header-color: #111; //111111
+@header-bg-color: @primary-1-color; //FFFFFF
+@header-color: #FFFFFF; //111111
 
 .header {
   background-color: @header-bg-color;
@@ -84,9 +84,14 @@ a.link-article {
 a.link-article:hover {
   display: inline-block;
   text-decoration: none;
+  color: @primary-1-color;
   border: 1px solid @primary-1-color;
   background-color: @body-bg-color;
   border-radius: 2px;
+}
+
+a.link-article:hover h2 {
+  color: @primary-1-color;
 }
 
 @article-size: 210px;
@@ -141,6 +146,21 @@ a.articles-list-load-more {
   text-decoration: none;
 }
 
+a.articles-list-load-more:hover {
+  background-color: @body-bg-color;
+}
+
 .display-none {
   display: none;
+}
+
+.newspaper-title {
+  text-transform: uppercase;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: @primary-1-light-color;
+  margin: -0.6em 0 0.2em;
+}
+.newspaper-title:hover {
+  color: @primary-1-color;
 }
