@@ -25,7 +25,7 @@ var NewspapersApp = React.createClass({
                 var newspapers = result["data"];
                 newspapers = _.sortBy(newspapers, 'name');
                 newspapers.map(function(newspaper) {
-                    newspaper.display = true;
+                    newspaper.display = false;
                 });
                 if (this.isMounted()) {
                     this.setState({newspapers_list: newspapers});
@@ -56,13 +56,22 @@ var NewspapersApp = React.createClass({
             );
         });
 
+        var displayNoNewspaperCheckedMessageBool = true;
+        this.state.newspapers_list.map(function(newspaper) {
+            if (newspaper.display){
+                displayNoNewspaperCheckedMessageBool = false;
+            }
+        });
+        var displayNoNewspaperCheckedMessage = displayNoNewspaperCheckedMessageBool ?
+            'articles-list-no-newspaper-text p4' : 'display-none';
+
         var FiltersNewspapersCheckboxes = this.state.newspapers_list.map(function(newspaper) {
             return (
                 <div>
                     <Checkbox label={newspaper.name}
                               ref={"filters_checkbox_newspaper_" + newspaper.id}
                               onCheck={this.onCheck}
-                              defaultSwitched={true} />
+                              defaultSwitched={false} />
                 </div>
             );
         }.bind(this));
@@ -76,7 +85,8 @@ var NewspapersApp = React.createClass({
                         <div className="right">
                             (icon here -->)
                             <IconButton iconClassName="muidocs-icon-action-home"
-                                        className="color-main border border-blue right" tooltip="Menu"/>
+                                        className="color-main border border-blue right"
+                                        tooltip="Menu"/>
                         </div>
                     </div>
                 </header>
@@ -104,6 +114,9 @@ var NewspapersApp = React.createClass({
                             { /* App main column : */ }
                             <div className="col col-9 py3 px3">
                                 {NewspapersArticlesLists}
+                                <div className={displayNoNewspaperCheckedMessage}>
+                                    <p>Select a newspaper on the left to display its articles.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
